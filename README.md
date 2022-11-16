@@ -1,3 +1,3 @@
 # CapTrackAssignments
 
-This reposritory holds the assignments given during the CapTrack
+This repository holds the assignments given during the CapTrack
