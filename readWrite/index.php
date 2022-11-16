@@ -14,7 +14,7 @@ require("./main.php");
 <body>
     
 
-<?php print_r(file_get_contents("./result.txt")); ?>
+<?= printTotal("./result.json") ?>
 
 </body>
 </html>

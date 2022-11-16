@@ -2,17 +2,19 @@
 
 $inputFile = "./lyrics.txt";
 
-$resultFile = "./result.txt";
+$resultFile = "./result.json";
 $lastXLinesFile = "./lastXLines.txt";
 
 
-function countStr (string $file, string $lookupValue) : int {
+function countStr (string $file, string $lookupValue) : string {
     $allText = file_get_contents($file);
     $removeSpecialChars = str_replace([",",".","!","?","\r", "\n", "\r\n"]," ", $allText);
     $allWordsLowercase = strtolower($removeSpecialChars);
     $allWordsArray = explode(' ', $allWordsLowercase);
     $frequency = array_count_values($allWordsArray);
-    return $frequency[$lookupValue];
+    $frequencyToJson = json_encode(["total" => $frequency[$lookupValue], "word" => $lookupValue]);
+    
+    return $frequencyToJson;
 }
 
 function lastXLines(string $file, int $numberLines) : array {
@@ -24,11 +26,16 @@ function lastXLines(string $file, int $numberLines) : array {
     return $resultArray;
 }
 
+function printTotal(string $file) : string {
+    $decodedFile = json_decode(file_get_contents($file));
+    return "Total number of '" . $decodedFile->word . "' is: " . $decodedFile->total;
+}
+
 
 
 file_put_contents($lastXLinesFile,lastXLines($inputFile,10));
 
-file_put_contents($resultFile,countStr($inputFile,"the"));
+file_put_contents($resultFile,countStr($inputFile,"any"));
 
 
 
